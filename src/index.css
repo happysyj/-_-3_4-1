@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+    background-color: #03030a;
+    color: #ffffff;
+    touch-action: manipulation;
+    user-select: none;
+    overflow: hidden;
+  }
+}
+
+.font-arcade {
+  font-family: 'Orbitron', 'Noto Sans KR', sans-serif;
+}
+
+/* Screen Damage Red Flash */
+@keyframes flash-red {
+  0% { background-color: rgba(255, 0, 0, 0.45); }
+  100% { background-color: rgba(255, 0, 0, 0); }
+}
+
+.damage-flash {
+  animation: flash-red 0.35s ease-out;
+}
+
+/* Pulse Glow Animation for Quiz Button */
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 15px rgba(250, 204, 21, 0.8), 0 0 30px rgba(250, 204, 21, 0.4); 
+    transform: scale(1); 
+  }
+  50% { 
+    box-shadow: 0 0 28px rgba(250, 204, 21, 1), 0 0 45px rgba(250, 204, 21, 0.6); 
+    transform: scale(1.04); 
+  }
+}
+
+.btn-pulse {
+  animation: pulse-glow 1.5s infinite ease-in-out;
+}
+
+.glow-title {
+  text-shadow: 0 0 12px #00f0ff, 0 0 24px #00f0ff, 0 0 36px #7000ff;
+}
+
+.glow-box {
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+  border: 2px solid rgba(0, 240, 255, 0.7);
+}
+
+.glow-red {
+  box-shadow: 0 0 25px rgba(255, 50, 50, 0.6);
+  border: 2px solid rgba(255, 50, 50, 0.8);
+}
+
+.glow-gold {
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+  border: 2px solid rgba(255, 215, 0, 0.9);
+}
