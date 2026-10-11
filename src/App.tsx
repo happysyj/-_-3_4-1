@@ -58,6 +58,24 @@ interface Star {
   alpha: number;
 }
 
+// Safe localStorage helpers (prevents DOMException: SecurityError in restricted environments)
+const safeGetHighScore = (): number => {
+  try {
+    const val = localStorage.getItem('nuri_high_score');
+    return val ? parseInt(val, 10) || 0 : 0;
+  } catch {
+    return 0;
+  }
+};
+
+const safeSetHighScore = (score: number) => {
+  try {
+    localStorage.setItem('nuri_high_score', score.toString());
+  } catch {
+    // ignore in restricted mode
+  }
+};
+
 export default function App() {
   // Game states: 'START' | 'PLAYING' | 'PAUSED' | 'GAMEOVER'
   const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'PAUSED' | 'GAMEOVER'>('START');
@@ -146,10 +164,7 @@ export default function App() {
 
   // Load high score
   useEffect(() => {
-    const saved = localStorage.getItem('nuri_high_score');
-    if (saved) {
-      setHighScore(parseInt(saved, 10) || 0);
-    }
+    setHighScore(safeGetHighScore());
   }, []);
 
   // Initialize stars
@@ -347,9 +362,9 @@ export default function App() {
     sfx.stopBGM();
 
     const finalScore = scoreRef.current;
-    const stored = parseInt(localStorage.getItem('nuri_high_score') || '0', 10);
+    const stored = safeGetHighScore();
     if (finalScore > stored) {
-      localStorage.setItem('nuri_high_score', finalScore.toString());
+      safeSetHighScore(finalScore);
       setHighScore(finalScore);
     }
   }, []);
